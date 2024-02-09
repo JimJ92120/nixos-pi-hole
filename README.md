@@ -3,6 +3,9 @@
 An example to run `pi-hole` with `docker` in a Raspberry Pi device (`arm` based device).  
 Refer to [NixOS `arm` documentation](https://nixos.wiki/wiki/NixOS_on_ARM) for boards' specifications.
 
+The following documentation will build a NixOS image to write on a SD card for targetted devices (`arm` / `aarch64`).  
+`pi-hole` will be setup through Docker (`oci-containers`) as a `systemd.service`.  
+
 Example has been tested on a `Raspberry Pi 4` (`4GB`) and a `Raspberry Pi Zero 2 WH`.
 
 ### important notes
