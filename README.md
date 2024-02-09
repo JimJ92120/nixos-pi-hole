@@ -79,7 +79,9 @@ sudo -i nix-channel --update
 
 `docker` and `docker-compose` are setup as `root` (to change).
 
-Files may be copied over via e.g `scp` or additional `nix` tools may be used (e.g `oci-containers`, `arion`).
+Files may be copied over via e.g `scp` or additional `nix` tools may be used (e.g `oci-containers`, `arion`).  
+
+The current example uses `oci-containers` to run `pi-hole` as a service.  
 
 See [NixOS Docker documentation](https://nixos.wiki/wiki/Docker).
 
