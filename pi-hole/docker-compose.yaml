@@ -1,0 +1,27 @@
+# https://github.com/pi-hole/docker-pi-hole
+version: "3.9"
+
+services:
+  pi-hole:
+    container_name: pi-hole
+    image: pihole/pihole:latest
+
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: ${TZ}
+      WEBPASSWORD: ${PI_HOLE_PASSWORD}
+    volumes:
+      - "./data/etc-pihole:/etc/pihole"
+      - "./data/etc-dnsmasq.d:/etc/dnsmasq.d"
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped

@@ -86,7 +86,8 @@ Files may be copied over via e.g `scp` or additional `nix` tools may be used (e.
 
 The current example uses `oci-containers` to run `pi-hole` as a service.  
 
-See [NixOS Docker documentation](https://nixos.wiki/wiki/Docker).
+See [NixOS Docker documentation](https://nixos.wiki/wiki/Docker).  
+Also see [`./pi-hole/docker-compose.yaml`](./pi-hole/docker-compose.yaml) for `docker-compose` translation.  
 
 ---
 
