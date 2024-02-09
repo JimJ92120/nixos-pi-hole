@@ -4,7 +4,7 @@ An example to run `pi-hole` with `docker` in a Raspberry Pi device (`arm` based 
 Refer to [NixOS `arm` documentation](https://nixos.wiki/wiki/NixOS_on_ARM) for boards' specifications.
 
 The following documentation will build a NixOS image to write on a SD card for targetted devices (`arm` / `aarch64`).  
-`pi-hole` will be setup through Docker (`oci-containers`) as a `systemd.service`.  
+`pi-hole` will be setup through Docker and `docker-compose`.  
 
 Example has been tested on a `Raspberry Pi 4` (`4GB`) and a `Raspberry Pi Zero 2 WH`.
 
@@ -17,7 +17,9 @@ Example has been tested on a `Raspberry Pi 4` (`4GB`) and a `Raspberry Pi Zero 2
 
 ---
 
-# build and write image
+# installation 
+
+## build and write image
 
 ```sh
 # example variables
@@ -29,9 +31,9 @@ SD_CARD='/dev/sda'
 IMAGE_NAME='nixos-sd-image-...-linux.img'
 ```
 
-### 1. update variables in `configuration.nix` (system configuration) and `docker.nix` (containers)
+#### 1. update variables in `configuration.nix` (system configuration) and `docker.nix` (containers)
 
-### 2. build the image from `./configuration.nix`
+#### 2. build the image from `./configuration.nix`
 
 ```sh
 export NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1
@@ -48,22 +50,22 @@ cp "result/sd-image/${IMAGE_NAME}.zst" /path/to/new/location/
 cd /path/to/new/location/
 ```
 
-### 3. de-compress the `.img.zst` output file
+#### 3. de-compress the `.img.zst` output file
 
 ```sh
 unzstd -d "${IMAGE_NAME}.zst"
 ```
 
-### 4. write `.img` to SD card
+#### 4. write `.img` to SD card
 
 ```sh
 # write to sd card
 sudo dd if=$IMAGE_NAME of=$SD_CARD bs=4096 conv=fsync status=progress
 ```
 
-### 5. mount the card on the target device
+#### 5. mount the card on the target device
 
-### 6. update `nix-channel`
+#### 6. update `nix-channel`
 
 By default `nix-channel` is not updated.  
 This may cause issue such as `nixpkgs` or `$NIX_PATH` not found though already set.
@@ -73,6 +75,14 @@ Following may be run:
 ```sh
 sudo -i nix-channel --update
 ```
+
+## run `pi-hole`
+
+#### 1. adjust files in [`./pi-hole`](./pi-hole) directory
+
+#### 2. upload / copy `./pi-hole` directory to the target host
+
+#### 3. run `docker-compose up -d` to start the `pi-hole` container
 
 ---
 
@@ -87,7 +97,6 @@ Files may be copied over via e.g `scp` or additional `nix` tools may be used (e.
 The current example uses `oci-containers` to run `pi-hole` as a service.  
 
 See [NixOS Docker documentation](https://nixos.wiki/wiki/Docker).  
-Also see [`./pi-hole/docker-compose.yaml`](./pi-hole/docker-compose.yaml) for `docker-compose` translation.  
 
 ---
 
